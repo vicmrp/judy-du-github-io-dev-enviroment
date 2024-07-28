@@ -4,3 +4,6 @@
 [submodule ".devcontainer/.docker-migrate"]
 	path = .devcontainer/.docker-migrate
 	url = https://github.com/dtuait/.docker-migrate.git
+[submodule "app-main/judy-du.github.io"]
+	path = app-main/judy-du.github.io
+	url = https://github.com/judy-du/judy-du.github.io
