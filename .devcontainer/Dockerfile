@@ -1,15 +1,13 @@
 # Use an official Python runtime as a parent image
-FROM python:3.10-bullseye
+# Use the official Node.js 20 image from Docker Hub
+FROM node:20
 
-# Build the Docker image with build arguments
-# docker build \
-#   --build-arg DOCKERUSER_UID=$DOCKERUSER_UID \
-#   --build-arg DOCKERUSER_GID=$DOCKERUSER_GID \
-#   --build-arg DOCKERUSER_NAME=$DOCKERUSER_NAME \
-#   --build-arg DOCKERUSER_PASSWORD=$DOCKERUSER_PASSWORD \
-#   -t my-docker-project .
-# or use default values
-# docker build -t my-docker-project .
+# Set the working directory in the container
+WORKDIR /usr/src/project
+
+
+
+
 ARG DOCKERUSER_UID=65000
 ARG DOCKERUSER_GID=65000
 ARG DOCKERUSER_NAME=dockeruser
@@ -36,11 +34,6 @@ ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US.UTF-8
 ###### fix locales ######
 
-RUN mkdir -p /usr/src/venvs && python -m venv /usr/src/venvs/app-main
-COPY requirements.txt /usr/src/
-RUN /usr/src/venvs/app-main/bin/pip install --upgrade pip && \
-    /usr/src/venvs/app-main/bin/pip install -r /usr/src/requirements.txt
-
 # install basic utils
 RUN apt-get update && apt-get install -y iputils-ping tree bash sudo gosu && rm -rf /var/lib/apt/lists/*
 
@@ -49,11 +42,6 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 
-# Copy app.py file
-COPY app.py /usr/src/app.py
-
-# Set the working directory in the container
-WORKDIR /usr/src/project
 
 # Set entrypoint
 ENTRYPOINT ["/entrypoint.sh"]

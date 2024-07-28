@@ -55,18 +55,6 @@ git config pull.rebase true
 
 
 
-# show current pip freeze
-echo "Show current pip freeze into requirements.txt..."
-echo "This is done so dependabot can taste the current environment."
-/usr/src/venvs/app-main/bin/pip freeze > /usr/src/project/app-main/requirements.txt
-
-echo "Getting git submodules"
-git submodule init && git submodule update
-
-# git init initial commit
-echo "Initial commit"
-git add .
-git commit -m "Initial commit"
 
 echo "Ending postCreateCommand.sh"
 
